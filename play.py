@@ -14,6 +14,10 @@ def stop():
 
 def play(title):
     device = soco.discovery.by_name("Stue")
+    if not device.is_coordinator:
+        print("Not coordinator")
+        device = device.group.coordinator
+        print("Using {}".format(device.player_name))
     library = device.music_library
     
     favs = library.get_sonos_favorites()
