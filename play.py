@@ -12,22 +12,28 @@ def stop():
     device = soco.discovery.by_name("Stue")
     device.stop()
 
-def play(title):
-    device = soco.discovery.by_name("Stue")
+def open_device(name):
+    device = soco.discovery.by_name(name)
     if not device.is_coordinator:
         print("Not coordinator")
         device = device.group.coordinator
         print("Using {}".format(device.player_name))
+    return device
+
+def start_normal_play(device, collection):
+    print("Playing {}".format(collection.title))
+    device.play_mode = 'NORMAL'
+    device.clear_queue()
+    device.add_to_queue(collection.reference)
+    device.play_from_queue(0)
+
+def play(title):
+    device = open_device("Stue")
     library = device.music_library
-    
     favs = library.get_sonos_favorites()
     for fav in favs:
         if fav.title.lower().startswith(title.lower()):
-            print("Playing {}".format(fav.title))
-            device.play_mode = 'NORMAL'
-            device.clear_queue()
-            device.add_to_queue(fav.reference)
-            device.play()
+            start_normal_play(device, fav)
             return
     print("{} not found in {}".format(title, list(fav.title for fav in favs)))
 
