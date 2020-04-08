@@ -24,6 +24,7 @@ def play(title):
     for fav in favs:
         if fav.title.lower().startswith(title.lower()):
             print("Playing {}".format(fav.title))
+            device.play_mode = 'NORMAL'
             device.clear_queue()
             device.add_to_queue(fav.reference)
             device.play()
