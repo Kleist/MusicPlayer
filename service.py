@@ -6,6 +6,7 @@ from mfrc522 import SimpleMFRC522
 import play
 import time
 
+NUM_FAILED_BEFORE_STOP = 10
 
 class TagPlayer(object):
     def __init__(self):
@@ -25,11 +26,11 @@ class TagPlayer(object):
                 self._current = text
         elif self._current:
             self._failed += 1
-            if self._failed > 2:
+            if self._failed > NUM_FAILED_BEFORE_STOP:
                 self._current = None
                 print("Stopping")
                 play.stop()
-        time.sleep(1)
+        time.sleep(.1)
 
 def main():
     try:
