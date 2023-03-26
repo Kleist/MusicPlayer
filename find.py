@@ -2,6 +2,7 @@
 
 import logging
 import sys
+import config
 
 import soco
 from soco.music_services import MusicService
@@ -10,10 +11,12 @@ from soco.music_library import MusicLibrary
 
 def open_device(name):
     device = soco.discovery.by_name(name)
+    if not device:
+        raise RuntimeError(f'Device "{name}" not found')
     if not device.is_coordinator:
-        print("Not coordinator")
+        logging.info("Not coordinator")
         device = device.group.coordinator
-        print("Using {}".format(device.player_name))
+        logging.info("Using {}".format(device.player_name))
     return device
 
 def find(device, title):
@@ -27,7 +30,7 @@ def find(device, title):
     print("{} not found in {}".format(title, list(fav.title for fav in favs)))
 
 def main(title, verbose):
-    device = open_device("Stue")
+    device = open_device(config.DEVICE_NAME)
     if verbose:
         root = logging.getLogger()
         root.setLevel(logging.DEBUG)

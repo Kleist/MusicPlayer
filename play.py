@@ -3,13 +3,15 @@
 import logging
 import sys
 
+import config
+
 import soco
 from soco.music_services import MusicService
 from soco.music_services.accounts import Account
 from soco.music_library import MusicLibrary
 
 def stop():
-    device = soco.discovery.by_name("Stue")
+    device = soco.discovery.by_name(config.DEVICE_NAME)
     device.stop()
 
 def open_device(name):
@@ -28,7 +30,7 @@ def start_normal_play(device, collection):
     device.play_from_queue(0)
 
 def play(title):
-    device = open_device("Stue")
+    device = open_device(config.DEVICE_NAME)
     library = device.music_library
     favs = library.get_sonos_favorites()
     for fav in favs:
