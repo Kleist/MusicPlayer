@@ -2,4 +2,4 @@
 
 virtualenv .venv
 . .venv/bin/activate
-pip install soco
+pip install soco mfrc522
