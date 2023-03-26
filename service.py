@@ -6,7 +6,7 @@ from mfrc522 import SimpleMFRC522
 import play
 import time
 
-NUM_FAILED_BEFORE_STOP = 10
+NUM_FAILED_BEFORE_STOP = 3
 
 class TagPlayer(object):
     def __init__(self):

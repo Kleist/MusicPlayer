@@ -1,0 +1,10 @@
+[Unit]
+Description=MusicPlayer service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExectStart=/usr/bin/python3 /home/kleist/MusicPlayer/service.property > /home/kleist/musicplayer.log 2>&1
+
+[Install]
+WantedBy=multi-user.target
